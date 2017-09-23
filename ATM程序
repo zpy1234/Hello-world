@@ -1,0 +1,484 @@
+//我的纯C语言编写的ATM程序
+
+
+#include<stdio.h>
+#include<string.h>
+#include<windows.h>
+#include<iostream>
+#include<stdlib.h>
+void mental();
+void select();
+void digital2();
+void digital3();
+void digital4();
+void login();
+void login1();
+void login2();
+void login3();
+void login4();
+struct accout *list();
+void output(struct accout *head);
+void newoutput(struct accout *head);  
+void insert(struct accout *head);
+struct accout *remove(struct accout *head);
+int main()
+{
+	mental();
+    list();
+    system("pause");
+    return 0;
+}
+
+void mental()
+{
+    printf("===========欢迎使用银行ATM系统=============\n");
+    printf("(1)开户        (2)登陆\n");
+    printf("(3)销户        (4)退出\n");
+    printf("===========================================\n"); 
+    }
+
+void select()
+{
+	 	 printf("===============================\n");
+         printf("(1) 存款业务        (2) 取款业务\n");
+         printf("(3) 查询业务        (4) 转账业务\n");
+         printf("(5) 修改密码\n");
+		 printf("===============================\n");
+
+	}
+	    
+struct accout
+{
+	char name[20];
+	char identif[20];
+	char number[20];
+	char password[20];
+	int money;
+	struct accout *next;
+};
+struct accout *list()
+ {
+ 	FILE *fp;
+ 	int i,j;
+    struct accout *head=NULL,*tail=NULL,*nepew;
+    struct accout *list[3];
+    head=(struct accout*)malloc(sizeof(struct accout)); 
+    printf("请输入您所选择的服务项目编号:");
+    scanf("%d",&j);
+    system("cls");
+    if(j=1)
+    printf("(1)开户\n");
+    if (head==NULL)
+      {
+        printf("内存不足！");
+        return NULL;
+	   }
+	 else  
+      {
+	   printf("请输入第1个用户的信息\n");
+       printf("姓名：\n");
+       scanf("%s",head->name);
+       printf("身份证号码：\n");
+       scanf("%s",head->identif);
+       printf("账号：\n");
+       scanf("%s",head->number);
+       printf("密码：\n");
+       scanf("%s",head->password);
+       printf("余额：\n");
+       scanf("%d",&head->money);
+       head->next=NULL;
+       tail=head;
+       if((fp=fopen("bank.txt","wb"))==NULL)
+	   printf("cannot open this file!");
+	else
+	{
+		fprintf(fp,"%s%s%s%s%d",head->name,head->identif,head->number,head->password,head->money);
+    }
+ 	}
+    for(i=0;i<2;i++) 
+      {
+       	nepew=(struct accout*)malloc(sizeof(struct  accout));
+      	if(nepew==NULL) 
+       {
+         printf("内存不足！");
+         return head;
+       }
+      else	
+       {
+	      printf("请输入第%d个用户的信息\n",i+2);
+	      printf("姓名:\n");
+	      scanf("%s",nepew->name);
+	      printf("身份证号码:\n");
+	      scanf("%s",nepew->identif);
+	      printf("账号:\n");
+	      scanf("%s",nepew->number);
+	      printf("密码:\n");
+          scanf("%s",nepew->password);
+          printf("余额:\n");
+          scanf("%d",&nepew->money);
+          nepew->next=NULL;
+          tail->next=nepew;
+          tail=nepew;
+          fprintf(fp,"%s%s%s%s%d\n",nepew->name,nepew->identif,nepew->number,nepew->password,nepew->money);
+	      
+	}
+	}
+    fclose(fp);
+    printf( "保存的账号信息如下：\n");
+	void output(struct accout *head);       
+    {
+	   struct accout *curnode=head;
+	   if(curnode)
+	   printf("姓名\t身份证\t账号\t密码\t余额\n");
+	   while(curnode)  
+   { 
+	     printf("%s\t",curnode->name);
+	     printf("%s\t",curnode->identif);
+	     printf("%s\t",curnode->number);
+	     printf("%s\t",curnode->password);
+	     printf("%d\n",curnode->money);
+	     curnode=curnode->next;
+   }
+    system("pause");
+    system("cls");
+    mental();
+	void digital2();
+     {
+     	 FILE *fp;
+         int j,k,k1;
+         char password[20]={"147852"};
+         char a1[20],b1[20],a[20],c1[20];
+         printf("请输入您所选择的服务项目编号");
+         scanf("%d",&j);
+         if(j=2)  
+         printf("(2)登陆\n");
+         printf("\n");
+         do
+         {
+         printf("=========================\n"); 
+         printf("请输入用户名\n");
+         scanf("%s",b1);
+         printf("请输入账号\n");
+		 scanf("%s",c1); 
+         printf("请输入密码\n"); 
+         scanf("%s",a1);
+         printf("=========================\n"); 
+         }
+         while(strcmp(a1,password)!=0);
+         system("cls");
+         printf("登陆成功,欢迎使用\n"); 
+		 select();       
+         printf("请选择序号: ");
+         scanf("%d",&k);
+         switch(k)
+         {
+		 case 1:
+		 login();
+		  
+         case 2:
+         login1();
+         
+		 case 3:
+         login2();
+         
+		 case 4:
+         login3();
+         
+		 case 5:
+         login4();
+		 
+		 default:
+		 printf("输入有误，请重新输入！\n");
+		 break;
+		 
+		 }
+		 system("cls");
+         mental();
+         printf("请输入您所选择的服务项目编号");
+         scanf("%d",&k1);
+         if(k1=3)  
+         printf("(3) 销户\n"); 
+        struct accout *remove(struct accout *head); 
+		{
+		  FILE *fp1;
+		  char a2[20],b2[20],c2[20],c21[20];
+		  struct accout *curnode=head;
+		  struct accout *present=NULL;
+		  printf("请输入需要删除的账号信息\n\n");
+		  printf("请输入账号\n");
+		  scanf("%s",b2);	
+		  while(curnode&&strcmp(curnode->number,b2)!=0)
+		 {
+		    present=curnode; 
+		    curnode=curnode->next; 
+			}
+		  if(curnode==NULL) 
+		{
+		    printf("找不到此账号\n");
+		    return head; 
+		}
+		else
+		{
+		 printf("请输入密码\n");
+		 scanf("%s",c2);
+		 if(strcmp(curnode->password,c2)==0)
+		 printf("进入身份信息识别页面\n");
+		 else
+		 {
+		 printf("您输入的密码有误，请重新输入!\n");
+		 printf("请输入密码\n");
+		 scanf("%s",c21);
+		 if(strcmp(curnode->password,c21)==0)
+		 printf("进入身份信息识别页面\n");
+		 } 
+		 }
+		printf("请输入身份证号码：\n");
+		scanf("%s",a2);
+		if(strcmp(curnode->identif,a2)==0)
+		present->next=curnode->next;
+		printf("销户成功！\n\n");
+		void insert(struct accout *head);
+		{
+			
+		}
+		printf("保存的账号信息为：\n");
+	void newoutput(struct accout *head);       
+    {
+    	FILE *fp0,*fp,*fp1,*fp2;
+    	int k,min;
+	   struct accout *present=head;
+	   char str[10]={"123456"},str1[10]={"456789"},a5[10];
+	   if(present)
+	   printf("姓名\t身份证\t账号\t密码\t余额\n");
+	   while(present)  
+   { 
+   		 printf("%s\t",present->name);
+	     printf("%s\t",present->identif);
+	     printf("%s\t",present->number);
+	     if(strcmp(present->number,str)==0)
+	     {
+		 printf("%s\t",present->password);
+		 fp0=fopen("trasfer.txt","rb");
+	     fscanf(fp0,"%d",&k);
+	     printf("%d\n",present->money+k);
+	     
+	     fclose(fp0);
+	    
+		 }
+		 else if(strcmp(present->number,str1)==0)
+		 {
+		 	fp1=fopen("new.txt","rb");
+	     	fscanf(fp1,"%s",a5);
+	     	strcpy(present->password,a5);
+	     	printf("%s\t",present->password);
+		 	fp=fopen("money.txt","rb");
+		 	fscanf(fp,"%d",&min);
+		 	present->money=min;
+		 	printf("%d\n",present->money);
+		 	fclose(fp1);
+			fclose(fp);
+		 }
+		 else
+		 {
+		 printf("%s\t",present->password);
+		 printf("%d\n",present->money);
+		 }
+	     present=present->next;
+   		fp2=fopen("newbank.txt","wb");
+   		fwrite(head,sizeof(struct accout),1,fp2);
+   }
+		fclose(fp2);
+		printf("\n");	
+		system("pause");
+	    system("cls");
+		mental();
+        void digital4();
+         {
+         int j,m,m1;
+         printf("请输入您所选择的服务项目编号");
+         scanf("%d",&j);
+         if(j=4)  
+         printf("(4)退出\n");
+         system("pause");
+         system("cls");
+         printf("是否继续操作？\n");
+		 printf("1. 是		2. 取卡 \n");
+		 printf("请选择序号: ");
+		 scanf("%d",&m);
+		 if(m=1)
+		 {
+		 mental(); 
+		printf("请输入您所选择的服务项目编号:");
+    	scanf("%d",&m1);
+    	system("cls");
+    	if(m1=1)
+    	printf("(1)开户\n");
+		}
+		else
+		{
+		printf("请取卡\n\n");
+		printf("****************\n");
+		printf("请注意身边的财物，防止遗失和被盗，再见！\n");
+		system("pause");
+		system("cls"); 
+     	}
+		 }
+         }
+         }
+         }
+	 	}
+	 }
+void login()
+	{
+     FILE *fp;
+     int m,sum;
+     printf("账户的当前余额为6000.00元\n");
+     printf("请输入存款金额：\n");
+     scanf("%d",&m);
+     printf("存款成功！\n");
+     sum=m+6000;
+     printf("您当前的账户余额为：%d\n",sum);
+     fp=fopen("money.txt","wb");
+     fprintf(fp,"%d",sum);
+     fclose(fp);
+     printf("\n");
+	 system("pause");
+	 system("cls");
+	 select();
+	}
+	 
+void login1()
+	{
+	FILE *fp;
+	int n,sum,remain,k2;
+	printf("请选择序号: ");
+	scanf("%d",&k2);
+	if(k2=2)
+	system("cls");
+	printf("(2) 取款业务\n");
+	if((fp=fopen("money.txt","r"))==NULL)
+	printf("error! can not open  this file\n");
+	else
+	fscanf(fp,"%d",&sum);
+	fclose(fp);
+	printf("账户的当前余额为%d元\n",sum);
+	printf("请输入取款金额：");
+	scanf("%d",&n);
+	if(n>sum)
+	{
+	printf("您输入的金额有误，请重新输入：");
+	scanf("%d",&n);
+	}
+	else 
+	printf("取款成功！\n");
+	remain=sum-n;
+	printf("您当前的账户余额为：%d\n",remain);
+    fp=fopen("money.txt","wb");
+    fprintf(fp,"%d",remain);
+    fclose(fp);
+    printf("\n");
+	system("pause");
+	system("cls");
+	select();
+	}
+	
+void login2()
+{
+	int remain,k1; 
+	FILE *fp;
+	printf("请选择序号: ");
+	scanf("%d",&k1);
+	if(k1=3)
+	system("cls");
+	printf("查询业务\n");
+	fp=fopen("money.txt","rb");
+	fscanf(fp,"%d",&remain);
+	printf("账户的当前余额为：%d",remain);
+	fclose(fp);
+	printf("\n");
+	system("pause");
+	system("cls");
+	select(); 
+	}
+void login3()
+{
+	FILE *fp,*fp0; 
+	int k,sum,min,k3;
+	char a3[20],b3[20],c3[20];
+	printf("请选择序号: ");
+	scanf("%d",&k3);
+	if(k3=4)
+	system("cls");
+	printf("(2) 转账业务\n");
+	printf("请输入需要转账的账号\n");
+	scanf("%s",a3);
+	printf("请确认此账号\n");
+	scanf("%s",b3);
+	if(strcmp(a3,b3)==0)
+	{
+	printf("请输入转账金额\n");
+	scanf("%d",&k);
+	}
+	else
+	{
+	printf("两次输入的帐号不同，请重新输入!\n\n");
+	printf("请输入账号\n");
+	scanf("%s",c3);
+	printf("请输入转账金额\n");
+	scanf("%d",&k);
+	}
+	fp=fopen("money.txt","rb");
+	fscanf(fp,"%d",&sum);
+	fclose(fp);
+	if(k>sum)
+	{
+	printf("您输入的金额有误，请重新输入：");
+	scanf("%d",&k);
+	}
+	else
+	printf("转账成功！\n");	
+	fp0=fopen("trasfer.txt","wb");
+	fprintf(fp0,"%d",k);
+	fclose(fp0);	
+	min=sum-k;
+	fp=fopen("money.txt","wb");
+	fprintf(fp,"%d",min);
+	fclose(fp);
+	printf("账户的当前余额为：%d",min);
+	printf("\n");
+	system("pause");
+	system("cls");
+	select();
+	}
+void login4()
+{
+	FILE *fp;
+	int k5; 
+	char a4[20],b4[20],c4[20];
+	printf("请选择序号: ");
+	scanf("%d",&k5);
+	if(k5=5)
+	system("cls");
+	printf("(5) 修改密码\n");
+	printf("请输入新的密码\n");
+	scanf("%s",a4);
+	fp=fopen("new.txt","wb");
+	fprintf(fp,"%s",a4);
+	printf("请再次确认新的密码\n");
+	scanf("%s",b4);
+	if(strcmp(a4,b4)==0)
+	printf("密码修改成功，请牢记此密码");
+	else
+	{
+		printf("确认的密码有误，请重新输入\n");
+		scanf("%s",c4);
+		printf("密码修改成功，请牢记此密码");
+	 } 
+	 fclose(fp);
+	 printf("\n");
+	 system("pause");
+	 system("cls");
+	 mental();
+			 }
+			 	
+			 
